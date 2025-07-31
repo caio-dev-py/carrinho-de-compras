@@ -1,0 +1,28 @@
+/* Botão outline minimalista na navbar */
+.btn-outline-navbar {
+    background-color: transparent;
+    border: 1px solid #2c2c2c;
+    border-radius: 0.4rem;
+    padding: 0.3rem 0.75rem;
+    margin-left: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Estilo do link dentro do botão */
+.btn-link-navbar {
+    text-decoration: none;
+    color: #e0e0e0;
+    font-weight: 500;
+    display: inline-block;
+}
+
+/* Hover do botão */
+.btn-outline-navbar:hover {
+    background-color: #2a2a2a;
+    border-color: #5e81ac;
+}
+
+.btn-outline-navbar:hover .btn-link-navbar {
+    color: #ffffff;
+}

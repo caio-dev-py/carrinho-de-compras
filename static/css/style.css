@@ -1,0 +1,118 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar escura */
+.navbar {
+    background-color: #1a1a1a;
+    border-bottom: 1px solid #2c2c2c;
+}
+
+.navbar-brand {
+    font-weight: 600;
+    color: #e0e0e0 !important;
+    font-size: 1.2rem;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: #a0a0a0;
+    transition: color 0.2s;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link.active {
+    color: #ffffff;
+}
+
+/* Área principal */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+/* Formulário */
+form {
+    background-color: #1a1a1a;
+    padding: 2rem;
+    border-radius: 0.75rem;
+    border: 1px solid #2c2c2c;
+    width: 100%;
+    max-width: 400px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #cccccc;
+}
+
+form input {
+    width: 100%;
+    padding: 0.6rem;
+    margin-bottom: 1rem;
+    background-color: #181818;
+    color: #f1f1f1;
+    border: 1px solid #2c2c2c;
+    border-radius: 0.5rem;
+    transition: border-color 0.3s;
+}
+
+form input:focus {
+    border-color: #5e81ac;
+    outline: none;
+}
+
+/* Botão outline */
+button[type="submit"],
+input[type="submit"],
+.btn-outline {
+    background-color: transparent;
+    color: #e0e0e0;
+    border: 1px solid #3a3a3a;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease-in-out;
+    width: 100%;
+}
+
+button[type="submit"]:hover,
+input[type="submit"]:hover,
+.btn-outline:hover {
+    background-color: #2a2a2a;
+    border-color: #5e81ac;
+    color: #ffffff;
+}
+
+/* Alertas discretos */
+.alert {
+    background-color: #2a2a2a;
+    border-left: 3px solid #5e81ac;
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+/* Rodapé */
+footer {
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.8rem;
+    color: #555;
+}
+

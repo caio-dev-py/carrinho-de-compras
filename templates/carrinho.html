@@ -1,0 +1,45 @@
+{% extends 'base.html' %} {% block title %}Carrinho{% endblock %}
+
+{% block content %}
+
+<form action="/carrinho/" method="post">
+    {{ form.hidden_tag() }}
+
+    {{ form.produto.label() }}
+    {{ form.produto() }}
+    {% for erro in form.produto.errors %}
+        {% if erro %}
+            <div class="alert alert-danger alert-dismissible fade show mt-2">
+                {{ erro }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    {{ form.preco.label() }}
+    {{ form.preco() }}
+    {% for erro in form.preco.errors %}
+        {% if erro %}
+            <div class="alert alert-danger alert-dismissible fade show mt-2">
+                {{ erro }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    {% with msgs = get_flashed_messages(with_categories=true) %}
+        {% if msgs %}
+            {% for cat, msg in msgs %}
+                <div class="alert alert-{{ cat }} alert-dismissible fade show">
+                    {{ msg }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    {{ form.add_carrinho(class='btn btn-outline') }}
+
+</form>
+
+{% endblock %}
