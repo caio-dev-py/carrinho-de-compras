@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, session
-from forms import LoginForm, CarrinhoForm
+from forms import LoginForm, CarrinhoForm, CadastroForm
 from models import Produto, UsuarioCarrinho, db
+from werkzeug.security import check_password_hash, generate_password_hash
 
 carrinho_route = Blueprint('carrinho', __name__, url_prefix='/carrinho')
 
@@ -12,14 +13,6 @@ def carrinho():
     if form.validate_on_submit():
         produto = form.produto.data
         preco = form.preco.data
-
-        usuario_existente = UsuarioCarrinho.query.filter_by(nome=session.get('usuario_nome')).first()
-
-        if not usuario_existente:
-            usuario = UsuarioCarrinho(nome=session.get('usuario_nome'))
-
-            db.session.add(usuario)
-            db.session.commit()
         
         produto_existente = Produto.query.filter_by(produto=produto).first()
 
@@ -50,14 +43,50 @@ def login():
     form = LoginForm()
 
     if form.validate_on_submit():
-        nome = form.nome.data
+        email = form.email.data
+        senha = form.senha.data
 
-        session['usuario_nome'] = nome
-
-        flash ('Usuário cadastrado.', 'success')
-        return redirect(url_for('carrinho.carrinho'))
+        usuario_existente = UsuarioCarrinho.query.filter_by(email=email).first()
+        if usuario_existente:
+            if check_password_hash(usuario_existente.senha, senha):
+                session['usuario_nome'] = usuario_existente.nome
+                
+                flash ('Usuário logado com sucesso', 'success')
+                return redirect(url_for('carrinho.carrinho'))
+            else:
+                flash ('Senha incorreta.', 'danger')
+                return redirect(url_for('carrinho.login'))
+        else:
+            flash ('Usuário não existe, cadastre-se', 'danger')
+            return redirect(url_for('carrinho.cadastrar'))
 
     return render_template('login.html', form=form, usuario_nome = session.get('usuario_nome'))
+
+@carrinho_route.route('/cadastrar', methods=['GET', 'POST'])
+def cadastrar():
+    form = CadastroForm()
+
+    if form.validate_on_submit():
+        nome = form.nome.data
+        email = form.email.data
+        senha = form.senha.data
+        senha_hash = generate_password_hash(senha)
+
+        usuario_existente = UsuarioCarrinho.query.filter_by(email=email).first()
+
+        if not usuario_existente:
+            usuario = UsuarioCarrinho(nome=nome, email=email, senha=senha_hash)
+            
+            db.session.add(usuario)
+            db.session.commit()
+
+            return redirect(url_for('carrinho.login'))
+        
+        else:
+            flash ('Usuário já existe.', 'success')
+            return redirect(url_for('carrinho.login'))
+
+    return render_template('cadastro.html', form=form, usuario_nome = session.get('usuario_nome'))
 
 @carrinho_route.route('/logout')
 def logout():
